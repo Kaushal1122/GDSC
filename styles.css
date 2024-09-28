@@ -21,13 +21,17 @@ body {
 
 header {
     background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
-    padding: 20px;
+    padding: 40px;
+    box-sizing: border-box;
     text-align: center;
     border-bottom: 1px solid #ddd;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Full width */
+    width:auto; /* Full width */
     border-radius: 0 0 20px 20px; /* Rounded corners */
+    transform: translateZ(30px) rotateX(0deg);
+    transition: transform 0.6s ease;
 }
+
 
 h1 {
     color: #4a90e2; /* Soft blue for headings */

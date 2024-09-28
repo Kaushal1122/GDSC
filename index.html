@@ -17,22 +17,23 @@
             perspective: 1000px;
         }
 
-        header {
+        /* header {
             background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
             text-align: center;
             border-bottom: 2px solid #ccc;
             transform: translateZ(50px) rotateX(10deg);
             transition: transform 0.3s ease;
-        }
+        } */
+
+        /* header h1 {
+            margin: 0;
+            color: #333;
+            font-size: 2rem;
+        } */
 
         header:hover {
             transform: translateZ(60px) rotateX(0deg);
-        }
-
-        h1 {
-            margin: 0;
-            color: #333;
         }
 
         main {
@@ -62,6 +63,7 @@
 
         input[type="text"],
         input[type="file"],
+        input[type="number"],
         select {
             width: 100%;
             padding: 10px;
@@ -70,8 +72,10 @@
             border-radius: 4px;
         }
 
+       
+
         button:hover {
-            background-color: green;
+            background-color: #218838;
             transform: scale(1.05);
         }
 
@@ -117,13 +121,13 @@
                 </select>
 
                 <label for="brand">Brand:</label>
-                <input type="text" id="brand" >
+                <input type="text" id="brand">
 
                 <label for="color">Color:</label>
-                <input type="text" id="color" >
+                <input type="text" id="color">
 
                 <label for="material">Material:</label>
-                <input type="text" id="material" >
+                <input type="text" id="material">
 
                 <label for="season">Season:</label>
                 <select id="season">
@@ -134,10 +138,15 @@
                 </select>
 
                 <label for="days-worn">How many days have you worn this item this month?</label>
-                <input type="number" id="days-worn" min="0" >
+                <input type="number" id="days-worn" min="0">
 
                 <label for="image">Upload Image:</label>
                 <input type="file" id="image" accept="image/*">
+
+                <label>
+                    <input type="checkbox" id="sustainability"> Sustainable Material
+
+                </label>
 
                 <button class="add" type="button" onclick="addItem()">Add Item</button>
             </form>
@@ -164,7 +173,7 @@
 
     <script>
         const items = [];
-        const overconsumptionItems = []; // Track overconsumed items
+        const overconsumptionItems = [];
 
         function addItem() {
             const category = document.getElementById('category').value;
@@ -174,6 +183,7 @@
             const season = document.getElementById('season').value;
             const daysWorn = parseInt(document.getElementById('days-worn').value);
             const imageInput = document.getElementById('image');
+            const sustainability = document.getElementById('sustainability').checked;
 
             if (imageInput.files.length === 0) {
                 alert('Please upload an image.');
@@ -194,12 +204,13 @@
                 material,
                 season,
                 daysWorn,
+                sustainability,
                 imageUrl
             };
 
             items.push(item);
             addItemToUI(item);
-            checkOverconsumption(item); // Check if the item exceeds wear limit
+            checkOverconsumption(item);
             document.getElementById('item-form').reset();
         }
 
@@ -216,6 +227,7 @@
                 <p><strong>Material:</strong> ${item.material}</p>
                 <p><strong>Season:</strong> ${item.season}</p>
                 <p><strong>Days Worn:</strong> ${item.daysWorn}</p>
+                <p><strong>Sustainable Material:</strong> ${item.sustainability ? 'Yes' : 'No'}</p>
                 <button class="remove-button" onclick="removeItem(this)">Remove</button>
                 <button class="donate-button">Donate</button>
                 <button class="lend-button">Lend</button>
