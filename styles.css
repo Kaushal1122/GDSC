@@ -26,6 +26,7 @@ body {
     100% {
         background-position: center center;
     }
+    
 }
 
 
@@ -86,7 +87,7 @@ select {
 }
 
 button {
-    background-color: #28a745;
+    background-color: rgb(87, 190, 224);
     color: white;
     padding: 10px 20px;
     border: none;
@@ -96,7 +97,7 @@ button {
 }
 
 button:hover {
-    background-color: #218838;
+    background-color: #0cb330;
     transform: scale(1.05);
 }
 
