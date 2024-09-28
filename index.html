@@ -5,6 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Wardrobe Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), 
+                        url('wardrobe.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            perspective: 1000px; /* Adds depth to the elements */
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #ccc;
+            transform: translateZ(50px) rotateX(10deg); /* Slight elevation and tilt */
+            transition: transform 0.3s ease;
+        }
+
+        header:hover {
+            transform: translateZ(60px) rotateX(0deg); /* Elevation and tilt on hover */
+        }
+
+        h1 {
+            margin: 0;
+            color: #333;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transform: translateZ(20px);
+            transition: transform 0.3s ease;
+        }
+
+        main:hover {
+            transform: translateZ(30px); /* Increased elevation on hover */
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Transition on hover */
+        }
+
+        button:hover {
+            background-color: #357ae8;
+            transform: scale(1.05); /* Slight scale effect on hover */
+        }
+
+        #items-container, #suggestions-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        #items-container:hover, 
+        #suggestions-container:hover {
+            transform: translateY(-5px); /* Lift effect on hover */
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -36,7 +129,6 @@
                     <option value="autumn">Autumn</option>
                     <option value="winter">Winter</option>
                 </select>
-                
                 
                 <label for="image">Upload Image:</label>
                 <input type="file" id="image" accept="image/*">
