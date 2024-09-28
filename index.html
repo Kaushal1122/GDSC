@@ -5,6 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Wardrobe Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('wardrobe.jpg'); /* Change this URL to your desired background image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #ccc;
+        }
+
+        h1 {
+            margin: 0;
+            color: #333;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: rgba(255, 255, 255, 0.9); /* White background with transparency */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4285f4; /* Google Blue */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #357ae8;
+        }
+
+        #items-container, #suggestions-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -36,7 +108,6 @@
                     <option value="autumn">Autumn</option>
                     <option value="winter">Winter</option>
                 </select>
-                
                 
                 <label for="image">Upload Image:</label>
                 <input type="file" id="image" accept="image/*">
