@@ -1,10 +1,10 @@
 * {
     box-sizing: border-box;
-    background-image: url('');/* Ensure padding and borders are included in element's total width and height */
+    background-image: url(''); /* Ensure padding and borders are included in element's total width and height */
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     background-size: cover; /* Cover the entire body */
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Prevent repeating */
@@ -14,13 +14,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh; /* Make sure body takes at least full viewport height */
-    opacity: 0.9; /* Slight transparency to enhance readability */
-    
-        /* Other styles... */
-        transition: background-image 0.5s ease; /* Smooth transition when changing seasons */
-    
-    
+    min-height: 100vh; /* Ensure body takes at least full viewport height */
+    background-color: #f0f4f8; /* Light background color for contrast */
+    transition: background-image 0.5s ease; /* Smooth transition when changing seasons */
 }
 
 header {
@@ -28,8 +24,15 @@ header {
     padding: 20px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%; /* Full width */
+    border-radius: 0 0 20px 20px; /* Rounded corners */
+}
+
+h1 {
+    color: #4a90e2; /* Soft blue for headings */
+    margin: 0;
+    font-size: 2.5rem; /* Larger font size for the main title */
 }
 
 main {
@@ -38,6 +41,7 @@ main {
     align-items: center;
     flex: 1; /* Allow main to expand */
     width: 100%; /* Full width */
+    padding: 20px;
 }
 
 section {
@@ -47,22 +51,26 @@ section {
     margin: 10px;
     width: 90%; /* Flexible width */
     max-width: 600px; /* Maximum width */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
 section:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 h2 {
-    color: #4a90e2; /* Soft blue for headings */
+    color: #4a90e2; /* Soft blue for section headings */
+    border-bottom: 2px solid #4a90e2; /* Underline for emphasis */
+    padding-bottom: 5px;
+    font-size: 1.8rem; /* Increased font size for headings */
 }
 
 label {
     display: block;
     margin-top: 10px;
+    font-weight: bold; /* Bold labels */
 }
 
 input[type="text"], select, input[type="file"] {
@@ -87,20 +95,22 @@ button {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s;
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
     width: 100%; /* Full width button */
+    font-weight: bold; /* Bold text for buttons */
 }
 
 button:hover {
     background-color: #357ABD; /* Darker blue on hover */
     transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Shadow on hover */
 }
 
 #items-container, #suggestions-container {
     margin-top: 15px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive grid */
+    gap: 10px; /* Gap between grid items */
     width: 100%; /* Full width */
 }
 
@@ -109,9 +119,8 @@ button:hover {
     border-radius: 10px;
     padding: 10px;
     border: 1px solid #ddd;
-    width: calc(50% - 10px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .wardrobe-item:hover, .outfit-suggestion:hover {
@@ -130,4 +139,78 @@ img {
     .wardrobe-item, .outfit-suggestion {
         width: calc(100% - 10px); /* Stack items on smaller screens */
     }
+<<<<<<< HEAD
+}
+/* General Theme Colors */
+body {
+    background-color: #F0F0F0; /* Light gray background */
+    color: #333333; /* Dark gray for text */
+}
+
+header {
+    background-color: rgba(255, 255, 255, 0.9); /* Keep the same slightly transparent header */
+    border-bottom: 2px solid #FF7043; /* Coral border for header */
+}
+
+h2 {
+    color: #4CAF50; /* Green for headings */
+}
+
+button {
+    background-color: #4CAF50; /* Primary button color - Green */
+}
+
+button:hover {
+    background-color: #388E3C; /* Darker green on hover */
+}
+
+.donate-button,
+.lend-button,
+.trade-button {
+    background-color: #FF7043; /* Coral color for action buttons */
+    color: #fff;
+    margin-top: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.donate-button:hover {
+    background-color: #E64A19; /* Darker coral for hover */
+}
+
+.lend-button:hover {
+    background-color: #E64A19;
+}
+
+.trade-button:hover {
+    background-color: #E64A19;
+}
+
+#items-container, #suggestions-container {
+    background-color: #FFFDE7; /* Light yellow background for items */
+=======
+
+    h1 {
+        font-size: 2rem; /* Smaller font size for mobile */
+    }
+    
+    h2 {
+        font-size: 1.5rem; /* Smaller section headings */
+    }
+
+    header {
+        padding: 15px; /* Reduce padding for smaller screens */
+    }
+
+    main {
+        padding: 10px; /* Reduce padding for smaller screens */
+    }
+
+    section {
+        margin: 5px; /* Reduce margins for smaller screens */
+    }
+>>>>>>> aa67a66f13265c9b4a1088f3603a6892643710a1
 }
