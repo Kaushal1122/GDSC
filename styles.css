@@ -131,3 +131,54 @@ img {
         width: calc(100% - 10px); /* Stack items on smaller screens */
     }
 }
+/* General Theme Colors */
+body {
+    background-color: #F0F0F0; /* Light gray background */
+    color: #333333; /* Dark gray for text */
+}
+
+header {
+    background-color: rgba(255, 255, 255, 0.9); /* Keep the same slightly transparent header */
+    border-bottom: 2px solid #FF7043; /* Coral border for header */
+}
+
+h2 {
+    color: #4CAF50; /* Green for headings */
+}
+
+button {
+    background-color: #4CAF50; /* Primary button color - Green */
+}
+
+button:hover {
+    background-color: #388E3C; /* Darker green on hover */
+}
+
+.donate-button,
+.lend-button,
+.trade-button {
+    background-color: #FF7043; /* Coral color for action buttons */
+    color: #fff;
+    margin-top: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.donate-button:hover {
+    background-color: #E64A19; /* Darker coral for hover */
+}
+
+.lend-button:hover {
+    background-color: #E64A19;
+}
+
+.trade-button:hover {
+    background-color: #E64A19;
+}
+
+#items-container, #suggestions-container {
+    background-color: #FFFDE7; /* Light yellow background for items */
+}
