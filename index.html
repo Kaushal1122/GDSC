@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Wardrobe Manager</title>
+</head>
+<body>
+    <header>
+        <h1>My Wardrobe Manager</h1>
+    </header>
+
+    <main>
+        <section id="wardrobe-form">
+            <h2>Add Clothing Item</h2>
+            <form id="item-form">
+                <label for="category">Category:</label>
+                <select id="category">
+                    <option value="shirt">Shirt</option>
+                    <option value="jeans">Jeans</option>
+                    <option value="jacket">Jacket</option>
+                    <option value="dress">Dress</option>
+                </select>
+
+                <label for="color">Color:</label>
+                <input type="text" id="color" placeholder="e.g., Red, Blue">
+
+                <label for="material">Material:</label>
+                <input type="text" id="material" placeholder="e.g., Cotton, Denim">
+
+                <label for="season">Season:</label>
+                <select id="season">
+                    <option value="summer">Summer</option>
+                    <option value="winter">Winter</option>
+                    <option value="all-season">All Season</option>
+                </select>
+
+                <label for="image">Upload Image:</label>
+                <input type="file" id="image" accept="image/*">
+
+                <button type="button" onclick="addItem()">Add Item</button>
+            </form>
+        </section>
+
+        <section id="wardrobe-items">
+            <h2>Wardrobe Items</h2>
+            <div id="items-container"></div>
+        </section>
+
+        <section id="outfit-suggestions">
+            <h2>Outfit Suggestions</h2>
+            <button onclick="getOutfitSuggestions()">Generate Suggestions</button>
+            <div id="suggestions-container"></div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
