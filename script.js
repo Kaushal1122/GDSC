@@ -1,3 +1,15 @@
+// document.addEventListener("DOMContentLoaded", function() {
+//     checkLoginStatus();
+// });
+// function checkLoginStatus() {
+//     if (sessionStorage.getItem("loggedIn") !== "true") {
+//         // Redirect to Login.html if not logged in
+//         window.location.href = "Login.html";
+//     }
+// }
+
+// Call the function to check login status on page load
+checkLoginStatus();
 function addItem() {
     const category = document.getElementById('category').value;
     const color = document.getElementById('color').value;
@@ -32,9 +44,23 @@ function addItemToUI(item) {
         <p><strong>Color:</strong> ${item.color}</p>
         <p><strong>Material:</strong> ${item.material}</p>
         <p><strong>Season:</strong> ${item.season}</p>
+        <button class="donate-button" onclick="donateItem('${item.category}', '${item.color}', '${item.material}', '${item.season}')">Donate</button>
+        <button class="lend-button" onclick="lendItem('${item.category}', '${item.color}', '${item.material}', '${item.season}')">Lend</button>
+        <button class="trade-button" onclick="tradeItem('${item.category}', '${item.color}', '${item.material}', '${item.season}')">Trade</button>
     `;
 
     itemsContainer.appendChild(itemDiv);
+}
+function donateItem(category, color, material, season) {
+    alert(`You have chosen to donate a ${color} ${category} made of ${material} for the ${season} season.`);
+}
+
+function lendItem(category, color, material, season) {
+    alert(`You have chosen to lend a ${color} ${category} made of ${material} for the ${season} season.`);
+}
+
+function tradeItem(category, color, material, season) {
+    alert(`You have chosen to trade a ${color} ${category} made of ${material} for the ${season} season.`);
 }
 
 function getOutfitSuggestions() {
