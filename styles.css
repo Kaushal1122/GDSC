@@ -139,7 +139,6 @@ img {
     .wardrobe-item, .outfit-suggestion {
         width: calc(100% - 10px); /* Stack items on smaller screens */
     }
-<<<<<<< HEAD
 }
 /* General Theme Colors */
 body {
@@ -191,26 +190,4 @@ button:hover {
 
 #items-container, #suggestions-container {
     background-color: #FFFDE7; /* Light yellow background for items */
-=======
-
-    h1 {
-        font-size: 2rem; /* Smaller font size for mobile */
-    }
-    
-    h2 {
-        font-size: 1.5rem; /* Smaller section headings */
-    }
-
-    header {
-        padding: 15px; /* Reduce padding for smaller screens */
-    }
-
-    main {
-        padding: 10px; /* Reduce padding for smaller screens */
-    }
-
-    section {
-        margin: 5px; /* Reduce margins for smaller screens */
-    }
->>>>>>> aa67a66f13265c9b4a1088f3603a6892643710a1
 }
