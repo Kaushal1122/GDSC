@@ -1,212 +1,153 @@
 * {
     box-sizing: border-box;
-    background-image: url(''); /* Ensure padding and borders are included in element's total width and height */
+    background-color: transparent;
+    /* background-image: url(''); Ensure padding and borders are included in element's total width and height */
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-size: cover; /* Cover the entire body */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent repeating */
-    color: #333;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+        url('Designer (2).jpeg') no-repeat center center fixed;
+    background-size: cover;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh; /* Ensure body takes at least full viewport height */
-    background-color: #f0f4f8; /* Light background color for contrast */
-    transition: background-image 0.5s ease; /* Smooth transition when changing seasons */
+    perspective: 1000px;
+    filter: brightness(95%);
+    animation: backgroundTopAnimation 10s ease-in-out infinite;
 }
+
+@keyframes backgroundTopAnimation {
+    0% {
+        background-position: center center;
+    }
+    50% {
+        background-position: center top;
+    }
+    100% {
+        background-position: center center;
+    }
+}
+
 
 header {
-    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
-    padding: 40px;
-    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
     text-align: center;
-    border-bottom: 1px solid #ddd;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width:auto; /* Full width */
-    border-radius: 0 0 20px 20px; /* Rounded corners */
-    transform: translateZ(30px) rotateX(0deg);
-    transition: transform 0.6s ease;
+    border-bottom: 2px solid #ccc;
+    transform: translateZ(50px) rotateX(10deg);
+    transition: transform 0.3s ease;
 }
 
-
-h1 {
-    color: #4a90e2; /* Soft blue for headings */
+header h1 {
     margin: 0;
-    font-size: 2.5rem; /* Larger font size for the main title */
+    color: #333;
+    font-size: 2rem;
+}
+
+header:hover {
+    transform: translateZ(60px) rotateX(0deg);
 }
 
 main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1; /* Allow main to expand */
-    width: 100%; /* Full width */
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transform: translateZ(20px);
+    transition: transform 0.3s ease;
+}
+
+main:hover {
+    transform: translateZ(30px);
 }
 
 section {
-    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
-    border-radius: 12px;
-    padding: 20px;
-    margin: 10px;
-    width: 90%; /* Flexible width */
-    max-width: 600px; /* Maximum width */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-h2 {
-    color: #4a90e2; /* Soft blue for section headings */
-    border-bottom: 2px solid #4a90e2; /* Underline for emphasis */
-    padding-bottom: 5px;
-    font-size: 1.8rem; /* Increased font size for headings */
+    margin-bottom: 20px;
 }
 
 label {
     display: block;
-    margin-top: 10px;
-    font-weight: bold; /* Bold labels */
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
-input[type="text"], select, input[type="file"] {
+input[type="text"],
+input[type="file"],
+input[type="number"],
+select {
     width: 100%;
     padding: 10px;
-    margin-top: 5px;
     margin-bottom: 15px;
-    border-radius: 8px;
     border: 1px solid #ccc;
+    border-radius: 4px;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: border 0.2s;
-}
-
-input[type="text"]:focus, select:focus {
-    border-color: #4a90e2; /* Change border color on focus */
 }
 
 button {
-    background-color: #4a90e2; /* Primary button color */
+    background-color: #28a745;
     color: white;
-    padding: 10px 15px;
+    padding: 10px 20px;
     border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
-    width: 100%; /* Full width button */
-    font-weight: bold; /* Bold text for buttons */
-}
-.remove-button:hover{
-    background-color: red;
-    }
-    .remove-button{
-        background-color: red;
-        }
-button:hover {
-    background-color: #357ABD; /* Darker blue on hover */
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Shadow on hover */
-}
-
-#items-container, #suggestions-container {
-    margin-top: 15px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive grid */
-    gap: 10px; /* Gap between grid items */
-    width: 100%; /* Full width */
-}
-
-.wardrobe-item, .outfit-suggestion {
-    background-color: #fafafa;
-    border-radius: 10px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.wardrobe-item:hover, .outfit-suggestion:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-}
-
-img {
-    border-radius: 8px;
-    max-width: 100%;
-    height: auto;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .wardrobe-item, .outfit-suggestion {
-        width: calc(100% - 10px); /* Stack items on smaller screens */
-    }
-}
-/* General Theme Colors */
-body {
-    background-color: #F0F0F0; /* Light gray background */
-    color: #333333; /* Dark gray for text */
-}
-
-header {
-    background-color: rgba(255, 255, 255, 0.9); /* Keep the same slightly transparent header */
-    border-bottom: 2px solid #FF7043; /* Coral border for header */
-}
-
-h2 {
-    color: #4CAF50; /* Green for headings */
-}
-
-button {
-    background-color: #4CAF50; /* Primary button color - Green */
-}
-
-button:hover {
-    background-color: #388E3C; /* Darker green on hover */
-}
-
-.donate-button,
-.lend-button,
-.trade-button {
-    background-color: #FF7043; /* Coral color for action buttons */
-    color: #fff;
-    margin-top: 10px;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
-button {
-            padding: 10px 20px;
-            background-color:rgb(85, 154, 197);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
 
-
-.donate-button:hover {
-    background-color: #E64A19 /* Darker coral for hover */
+button:hover {
+    background-color: #218838;
+    transform: scale(1.05);
 }
 
-.lend-button:hover {
-    background-color: #E64A19;
+#items-container,
+#suggestions-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
 }
 
+#items-container:hover,
+#suggestions-container:hover {
+    transform: translateY(-5px);
+}
+
+.wardrobe-item {
+    margin-bottom: 15px;
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.wardrobe-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.remove-button,
+.donate-button,
+.lend-button,
+.trade-button {
+    background-color: #dc3545;
+    margin-right: 5px;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.remove-button:hover,
+.donate-button:hover,
+.lend-button:hover,
 .trade-button:hover {
-    background-color: #E64A19;
-}
-
-#items-container, #suggestions-container {
-    background-color: #FFFDE7; /* Light yellow background for items */
+    background-color: #c82333;
+    transform: scale(1.05);
 }
