@@ -1,34 +1,56 @@
 * {
     box-sizing: border-box;
-    background-color: transparent;
-    /* background-image: url(''); Ensure padding and borders are included in element's total width and height */
+    background-color: white; /* Ensure padding and borders are included in element's total width and height */
 }
 
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
-        url('Designer (2).jpeg') no-repeat center center fixed;
-    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.7);
     margin: 0;
     padding: 0;
     perspective: 1000px;
-    filter: brightness(95%);
-    animation: backgroundTopAnimation 10s ease-in-out infinite;
+    filter: brightness(100%);
+    animation: backgroundImageChange 35s ease-in-out infinite; /* Animation duration */
 }
 
-@keyframes backgroundTopAnimation {
-    0% {
+/* Keyframes for background image transitions */
+@keyframes backgroundImageChange {
+    0%, 10% {
+        background-image: url('Designer (2).jpeg'); /* First image */
         background-position: center center;
+        /* opacity: 0.8; Lower opacity */
     }
-    50% {
-        background-position: center top;
+    20%, 25% {
+        background-image: url('Designer (2).jpeg'); /* Hold the first image */
+        background-position: center top; /* Move to the top */
+        /* opacity: 0.8; Maintain opacity */
+    }
+    30%, 40% {
+        background-image: url('Designer.jpeg'); /* Second image */
+        background-position: center center;
+        /* opacity: 0.6; Slightly lower opacity for transition */
+    }
+    50%, 55% {
+        background-image: url('Designer.jpeg'); /* Hold the second image */
+        background-position: center top; /* Move to the top */
+        /* opacity: 0.8; Increase opacity */
+    }
+    60%, 70% {
+        background-image: url('Designer (1).jpeg'); /* Third image */
+        background-position: center center;
+        /* opacity: 0.6; Lower opacity for transition */
+    }
+    80%, 90% {
+        background-image: url('Designer (1).jpeg'); /* Hold the third image */
+        background-position: center top; /* Move to the top */
+        /* opacity: 0.8; Increase opacity */
     }
     100% {
+        background-image: url('Designer (2).jpeg'); /* Reset to the first image */
         background-position: center center;
+        /* opacity: 0.8; Maintain opacity */
     }
-    
 }
-
 
 header {
     background-color: rgba(255, 255, 255, 0.8);
@@ -41,7 +63,7 @@ header {
 }
 
 header h1 {
-    margin:0;
+    margin: 0;
     color: #333;
     font-size: 2rem;
 }
