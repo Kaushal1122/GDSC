@@ -25,8 +25,8 @@ loginForm.addEventListener('submit', function (e) {
     const passwordValue = password.value;
 
     // Example condition: replace these with your actual credentials or validation logic
-    const validUsername = 'user'; // Replace with your actual username
-    const validPassword = 'password123'; // Replace with your actual password
+    const validUsername = 'harshadrawat157@gmail.com'; // Replace with your actual username
+    const validPassword = 'harshad1234'; // Replace with your actual password
 
     // Check if the entered username and password match the valid credentials
     if (username === validUsername && passwordValue === validPassword) {
