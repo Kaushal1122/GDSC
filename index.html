@@ -8,7 +8,6 @@
     <title>Wardrobe Manager</title>
     <style>
         body {
-            
             font-family: Arial, sans-serif;
             background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
                 url('wardrobe.jpg') no-repeat center center fixed;
@@ -16,8 +15,6 @@
             margin: 0;
             padding: 0;
             perspective: 1000px;
-            
-            /* Adds depth to the elements */
         }
 
         header {
@@ -26,13 +23,11 @@
             text-align: center;
             border-bottom: 2px solid #ccc;
             transform: translateZ(50px) rotateX(10deg);
-            /* Slight elevation and tilt */
             transition: transform 0.3s ease;
         }
 
         header:hover {
             transform: translateZ(60px) rotateX(0deg);
-            /* Elevation and tilt on hover */
         }
 
         h1 {
@@ -53,7 +48,6 @@
 
         main:hover {
             transform: translateZ(30px);
-            /* Increased elevation on hover */
         }
 
         section {
@@ -75,23 +69,10 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-        
-
-        button {
-            padding: 10px 20px;
-            background-color: #4285f4;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            /* Transition on hover */
-        }
 
         button:hover {
-            background-color: #357ae8;
+            background-color: green;
             transform: scale(1.05);
-            /* Slight scale effect on hover */
         }
 
         #items-container,
@@ -107,9 +88,14 @@
         #items-container:hover,
         #suggestions-container:hover {
             transform: translateY(-5px);
-            /* Lift effect on hover */
         }
 
+        .wardrobe-item {
+            margin-bottom: 15px;
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            border-radius: 4px;
+        }
     </style>
 </head>
 
@@ -130,11 +116,14 @@
                     <option value="dress">Dress</option>
                 </select>
 
+                <label for="brand">Brand:</label>
+                <input type="text" id="brand" >
+
                 <label for="color">Color:</label>
-                <input type="text" id="color" placeholder="e.g., Red, Blue">
+                <input type="text" id="color" >
 
                 <label for="material">Material:</label>
-                <input type="text" id="material" placeholder="e.g., Cotton, Denim">
+                <input type="text" id="material" >
 
                 <label for="season">Season:</label>
                 <select id="season">
@@ -144,18 +133,27 @@
                     <option value="winter">Winter</option>
                 </select>
 
+                <label for="days-worn">How many days have you worn this item this month?</label>
+                <input type="number" id="days-worn" min="0" >
+
                 <label for="image">Upload Image:</label>
                 <input type="file" id="image" accept="image/*">
 
-                <button type="button" onclick="addItem()">Add Item</button>
+                <button class="add" type="button" onclick="addItem()">Add Item</button>
             </form>
         </section>
-        <!-- In the form section, add buttons for Donate, Lend, and Trade -->
+
         <section id="wardrobe-items">
             <h2>Wardrobe Items</h2>
             <div id="items-container"></div>
         </section>
-        
+
+        <section id="overconsumption">
+            <h2>Overconsumption</h2>
+            <div id="overconsumption-stats">
+                <p>Items that exceed 10 wears in the last 30 days will appear here.</p>
+            </div>
+        </section>
 
         <section id="outfit-suggestions">
             <h2>Outfit Suggestions</h2>
@@ -164,27 +162,145 @@
         </section>
     </main>
 
-    <script src="script.js"></script>
     <script>
+        const items = [];
+        const overconsumptionItems = []; // Track overconsumed items
+
+        function addItem() {
+            const category = document.getElementById('category').value;
+            const brand = document.getElementById('brand').value;
+            const color = document.getElementById('color').value;
+            const material = document.getElementById('material').value;
+            const season = document.getElementById('season').value;
+            const daysWorn = parseInt(document.getElementById('days-worn').value);
+            const imageInput = document.getElementById('image');
+
+            if (imageInput.files.length === 0) {
+                alert('Please upload an image.');
+                return;
+            }
+
+            if (isNaN(daysWorn) || daysWorn <= 0) {
+                alert('Please enter the number of days worn.');
+                return;
+            }
+
+            const imageUrl = URL.createObjectURL(imageInput.files[0]);
+
+            const item = {
+                category,
+                brand,
+                color,
+                material,
+                season,
+                daysWorn,
+                imageUrl
+            };
+
+            items.push(item);
+            addItemToUI(item);
+            checkOverconsumption(item); // Check if the item exceeds wear limit
+            document.getElementById('item-form').reset();
+        }
+
         function addItemToUI(item) {
             const itemsContainer = document.getElementById('items-container');
             const itemDiv = document.createElement('div');
             itemDiv.classList.add('wardrobe-item');
-        
+
             itemDiv.innerHTML = `
                 <img src="${item.imageUrl}" alt="${item.category}" width="100%">
                 <p><strong>Category:</strong> ${item.category}</p>
+                <p><strong>Brand:</strong> ${item.brand}</p>
                 <p><strong>Color:</strong> ${item.color}</p>
                 <p><strong>Material:</strong> ${item.material}</p>
                 <p><strong>Season:</strong> ${item.season}</p>
+                <p><strong>Days Worn:</strong> ${item.daysWorn}</p>
+                <button class="remove-button" onclick="removeItem(this)">Remove</button>
                 <button class="donate-button">Donate</button>
                 <button class="lend-button">Lend</button>
                 <button class="trade-button">Trade</button>
             `;
-        
+
             itemsContainer.appendChild(itemDiv);
         }
-        </script>
+
+        function removeItem(button) {
+            const itemDiv = button.parentElement;
+            itemDiv.remove();
+        }
+
+        function checkOverconsumption(item) {
+            if (item.daysWorn > 10) {
+                overconsumptionItems.push(item);
+                updateOverconsumptionStats(item);
+            }
+        }
+
+        function updateOverconsumptionStats() {
+            const overconsumptionStats = document.getElementById('overconsumption-stats');
+            overconsumptionStats.innerHTML = '';
+
+            overconsumptionItems.forEach(item => {
+                const stat = document.createElement('p');
+                stat.innerHTML = `
+                    <img src="${item.imageUrl}" alt="${item.category}" width="50">
+                    <strong>${item.category}:</strong> Worn ${item.daysWorn} times this month
+                `;
+                overconsumptionStats.appendChild(stat);
+            });
+        }
+
+        function getOutfitSuggestions() {
+            const availableItems = items.filter(item => !overconsumptionItems.includes(item));
+
+            const suggestions = {};
+
+            availableItems.forEach(item => {
+                if (!suggestions[item.category]) {
+                    suggestions[item.category] = [];
+                }
+                suggestions[item.category].push(item);
+            });
+
+            const suggestion = {
+                shirt: getRandomItem(suggestions.shirt),
+                jeans: getRandomItem(suggestions.jeans),
+                jacket: getRandomItem(suggestions.jacket),
+                dress: getRandomItem(suggestions.dress)
+            };
+
+            displaySuggestions(suggestion);
+        }
+
+        function getRandomItem(items) {
+            if (items && items.length > 0) {
+                const randomIndex = Math.floor(Math.random() * items.length);
+                return items[randomIndex];
+            }
+            return null;
+        }
+
+        function displaySuggestions(suggestion) {
+            const suggestionsContainer = document.getElementById('suggestions-container');
+            suggestionsContainer.innerHTML = ''; // Clear previous suggestions
+
+            for (let category in suggestion) {
+                if (suggestion[category]) {
+                    const item = suggestion[category];
+                    const suggestionDiv = document.createElement('div');
+                    suggestionDiv.classList.add('wardrobe-item');
+
+                    suggestionDiv.innerHTML = `
+                        <img src="${item.imageUrl}" alt="${item.category}" width="100%">
+                        <p><strong>${category.charAt(0).toUpperCase() + category.slice(1)}:</strong> ${item.brand} - ${item.color}</p>
+                    `;
+
+                    suggestionsContainer.appendChild(suggestionDiv);
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>
