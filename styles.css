@@ -4,8 +4,8 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: rgba(255, 255, 255, 0.7);
+    font-family: 'Arial', sans-serif; /* Clean font for a professional look */
+    background-color: rgba(255, 255, 255, 0.7); /* Ensure padding and borders are included in element's total width and height */
     margin: 0;
     padding: 0;
     perspective: 1000px;
@@ -52,19 +52,20 @@ body {
     }
 }
 
+/* Header styling */
 header {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.8); /* Ensure compatibility with background images */
     padding: 40px;
     text-align: center;
     border-bottom: 2px solid #ccc;
     transform: translateZ(10px) rotateX(10deg);
     transition: transform 0.3s ease;
-    width: auto;
+    color: #4B79A1; /* Corporate blue color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    margin: 0;
 }
 
 header h1 {
-    margin: 0;
-    color: #333;
     font-size: 2rem;
 }
 
@@ -72,10 +73,11 @@ header:hover {
     transform: translateZ(60px) rotateX(0deg);
 }
 
+/* Main content area */
 main {
-    max-width: 800px;
-    margin: 20px auto;
-    background-color: rgba(255, 255, 255, 0.8);
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: rgba(255, 255, 255, 0.8); /* White background for main content */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -85,6 +87,13 @@ main {
 
 main:hover {
     transform: translateZ(30px);
+}
+
+/* Section headers */
+h2 {
+    font-size: 1.5rem;
+    color: #333333; /* Dark gray for better readability */
+    margin-bottom: 15px;
 }
 
 section {
@@ -122,6 +131,44 @@ button {
 button:hover {
     background-color: #0cb330;
     transform: scale(1.05);
+}
+
+/* Chart container */
+.chart-container {
+    display: flex; /* Use flexbox to align charts side by side */
+    justify-content: space-between;
+}
+
+/* Chart box styling */
+.chart-box {
+    flex: 1; /* Allow the chart boxes to take equal space */
+    margin: 10px; /* Add some margin around the boxes */
+    background-color: #f8f9fa; /* Light background for the chart boxes */
+    border-radius: 5px; /* Slightly rounded corners */
+    padding: 10px; /* Padding inside the chart box */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px; /* Increased padding for better spacing */
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #4B79A1; /* Corporate blue for table header */
+    color: white;
+}
+
+tr:hover {
+    background-color: #e9ecef; /* Light gray background on hover */
 }
 
 #items-container,
@@ -174,4 +221,19 @@ button:hover {
 .trade-button:hover {
     background-color: #c82333;
     transform: scale(1.05);
+}
+
+/* Responsive styling */
+@media (max-width: 600px) {
+    header {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    .chart-container {
+        flex-direction: column; /* Stack charts on small screens */
+    }
 }

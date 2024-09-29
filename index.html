@@ -5,34 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Wardrobe Manager</title>
+    <title>Wardrobe Manager & Usage Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
                 url('Designer (2).jpeg') no-repeat center center fixed;
-            
             background-size: cover;
             margin: 0;
             padding: 0;
             perspective: 1000px;
             filter: brightness(95%);
         }
+        .removebtn:hover {
+            background-color: red; /* Bootstrap danger color */
 
-        /* header {
+        header {
             background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
             text-align: center;
             border-bottom: 2px solid #ccc;
             transform: translateZ(50px) rotateX(10deg);
             transition: transform 0.3s ease;
-        } */
+        }
 
-        /* header h1 {
+        header h1 {
             margin: 0;
             color: #333;
             font-size: 2rem;
-        } */
+        }
 
         header:hover {
             transform: translateZ(60px) rotateX(0deg);
@@ -49,7 +51,7 @@
             transform: translateZ(20px);
             transition: transform 0.3s ease;
         }
-
+        
         main:hover {
             transform: translateZ(30px);
         }
@@ -74,8 +76,6 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-
-       
 
         button:hover {
             background-color: #218838;
@@ -102,6 +102,34 @@
             border: 1px solid #e0e0e0;
             padding: 10px;
             border-radius: 4px;
+        }
+
+        .chart-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .chart-box {
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
@@ -148,7 +176,6 @@
 
                 <label>
                     <input type="checkbox" id="sustainability"> Sustainable Material
-
                 </label>
 
                 <button class="add" type="button" onclick="addItem()">Add Item</button>
@@ -172,11 +199,54 @@
             <button onclick="getOutfitSuggestions()">Generate Suggestions</button>
             <div id="suggestions-container"></div>
         </section>
+
+        <section id="analytics-dashboard">
+            <h2 style="color: black;">Analytic Dashboard</h2>
+            <div class="chart-container">
+                <div class="chart-box">
+                    <h3 style="color: black;">Pie Chart of Wardrobe Usage</h3>
+                    <canvas id="wardrobeUsageChart"></canvas>
+                </div>
+                <div class="chart-box">
+                    <h3 style="color: black;">Bar Chart of Times Worn</h3>
+                    <canvas id="timesWornChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="usage-table">
+            <h2 style="color: #ffecbc;">Usage Statistics Table</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Times Worn</th>
+                    </tr>
+                </thead>
+                <tbody id="usage-table-body">
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </section>
     </main>
 
     <script>
-        const items = [];
-        const overconsumptionItems = [];
+        let items = [];
+        let overconsumptionItems = [];
+        let categoryCount = {
+            shirt: 0,
+            jeans: 0,
+            jacket: 0,
+            accessories: 0
+        };
+        let timesWornData = {
+            shirt: 0,
+            jeans: 0,
+            jacket: 0,
+            accessories: 0
+        };
+
+        let wardrobeUsageChart, timesWornChart;
 
         function addItem() {
             const category = document.getElementById('category').value;
@@ -193,7 +263,7 @@
                 return;
             }
 
-            if (isNaN(daysWorn) || daysWorn <= 0) {
+            if (isNaN(daysWorn) || daysWorn < 0) {
                 alert('Please enter the number of days worn.');
                 return;
             }
@@ -214,6 +284,8 @@
             items.push(item);
             addItemToUI(item);
             checkOverconsumption(item);
+            updateUsageStatistics();
+            updateCharts(); // Update charts with new data
             document.getElementById('item-form').reset();
         }
 
@@ -221,9 +293,8 @@
             const itemsContainer = document.getElementById('items-container');
             const itemDiv = document.createElement('div');
             itemDiv.classList.add('wardrobe-item');
-
             itemDiv.innerHTML = `
-                <img src="${item.imageUrl}" alt="${item.category}" width="100%">
+                <img src="${item.imageUrl}" alt="${item.brand} ${item.color}" style="max-width: 100px; max-height: 100px;">
                 <p><strong>Category:</strong> ${item.category}</p>
                 <p><strong>Brand:</strong> ${item.brand}</p>
                 <p><strong>Color:</strong> ${item.color}</p>
@@ -231,89 +302,120 @@
                 <p><strong>Season:</strong> ${item.season}</p>
                 <p><strong>Days Worn:</strong> ${item.daysWorn}</p>
                 <p><strong>Sustainable Material:</strong> ${item.sustainability ? 'Yes' : 'No'}</p>
-                <button class="remove-button" onclick="removeItem(this)">Remove</button>
-                <button class="donate-button">Donate</button>
-                <button class="lend-button">Lend</button>
-                <button class="trade-button">Trade</button>
+                <button class="removebtn"onclick="removeItem(this)">Remove</button>
+                <button onclick="lendItem(this)">Lend</button>
+                <button onclick="donateItem(this)">Donate</button>
+                <button onclick="tradeItem(this)">Trade</button>
             `;
-
             itemsContainer.appendChild(itemDiv);
-        }
-
-        function removeItem(button) {
-            const itemDiv = button.parentElement;
-            itemDiv.remove();
         }
 
         function checkOverconsumption(item) {
             if (item.daysWorn > 10) {
                 overconsumptionItems.push(item);
-                updateOverconsumptionStats(item);
+                const overconsumptionStats = document.getElementById('overconsumption-stats');
+                overconsumptionStats.innerHTML += `<p>${item.brand} ${item.color} (${item.daysWorn} days worn)</p>`;
             }
         }
 
-        function updateOverconsumptionStats() {
-            const overconsumptionStats = document.getElementById('overconsumption-stats');
-            overconsumptionStats.innerHTML = '';
+        function updateUsageStatistics() {
+            const lastItemCategory = items[items.length - 1].category;
+            categoryCount[lastItemCategory]++;
+            timesWornData[lastItemCategory] += items[items.length - 1].daysWorn;
+            populateUsageTable();
+        }
 
-            overconsumptionItems.forEach(item => {
-                const stat = document.createElement('p');
-                stat.innerHTML = `
-                    <img src="${item.imageUrl}" alt="${item.category}" width="50">
-                    <strong>${item.category}:</strong> Worn ${item.daysWorn} times this month
-                `;
-                overconsumptionStats.appendChild(stat);
+        function populateUsageTable() {
+            const usageTableBody = document.getElementById('usage-table-body');
+            usageTableBody.innerHTML = '';
+            for (const category in categoryCount) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${category}</td><td>${timesWornData[category]}</td>`;
+                usageTableBody.appendChild(row);
+            }
+        }
+
+        function updateCharts() {
+            const categoryLabels = Object.keys(timesWornData);
+            const timesWornValues = Object.values(timesWornData);
+
+            // Update wardrobe usage chart
+            if (wardrobeUsageChart) {
+                wardrobeUsageChart.destroy();
+            }
+            wardrobeUsageChart = new Chart(document.getElementById('wardrobeUsageChart'), {
+                type: 'pie',
+                data: {
+                    labels: categoryLabels,
+                    datasets: [{
+                        label: 'Wardrobe Usage',
+                        data: timesWornValues,
+                        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56']
+                    }]
+                }
+            });
+
+            // Update times worn chart
+            if (timesWornChart) {
+                timesWornChart.destroy();
+            }
+            timesWornChart = new Chart(document.getElementById('timesWornChart'), {
+                type: 'bar',
+                data: {
+                    labels: categoryLabels,
+                    datasets: [{
+                        label: 'Times Worn',
+                        data: timesWornValues,
+                        backgroundColor: '#36a2eb'
+                    }]
+                }
             });
         }
 
         function getOutfitSuggestions() {
-            const availableItems = items.filter(item => !overconsumptionItems.includes(item));
-
-            const suggestions = {};
-
-            availableItems.forEach(item => {
-                if (!suggestions[item.category]) {
-                    suggestions[item.category] = [];
-                }
-                suggestions[item.category].push(item);
-            });
-
-            const suggestion = {
-                shirt: getRandomItem(suggestions.shirt),
-                jeans: getRandomItem(suggestions.jeans),
-                jacket: getRandomItem(suggestions.jacket),
-                dress: getRandomItem(suggestions.dress)
-            };
-
-            displaySuggestions(suggestion);
-        }
-
-        function getRandomItem(items) {
-            if (items && items.length > 0) {
-                const randomIndex = Math.floor(Math.random() * items.length);
-                return items[randomIndex];
-            }
-            return null;
-        }
-
-        function displaySuggestions(suggestion) {
             const suggestionsContainer = document.getElementById('suggestions-container');
-            suggestionsContainer.innerHTML = ''; // Clear previous suggestions
+            suggestionsContainer.innerHTML = '';
 
-            for (let category in suggestion) {
-                if (suggestion[category]) {
-                    const item = suggestion[category];
-                    const suggestionDiv = document.createElement('div');
-                    suggestionDiv.classList.add('wardrobe-item');
-
-                    suggestionDiv.innerHTML = `
-                        <img src="${item.imageUrl}" alt="${item.category}" width="100%">
-                        <p><strong>${category.charAt(0).toUpperCase() + category.slice(1)}:</strong> ${item.brand} - ${item.color}</p>
-                    `;
-
-                    suggestionsContainer.appendChild(suggestionDiv);
-                }
+            if (items.length === 0) {
+                suggestionsContainer.innerHTML = '<p>Please add some items to your wardrobe first.</p>';
+                return;
             }
+
+            const randomItem = items[Math.floor(Math.random() * items.length)];
+            const suggestionDiv = document.createElement('div');
+            suggestionDiv.classList.add('wardrobe-item');
+            suggestionDiv.innerHTML = `
+                <p>How about wearing your ${randomItem.color} ${randomItem.brand} ${randomItem.category}?</p>
+                <img src="${randomItem.imageUrl}" alt="${randomItem.brand} ${randomItem.color}" style="max-width: 100px; max-height: 100px;">
+            `;
+            suggestionsContainer.appendChild(suggestionDiv);
+        }
+
+        function removeItem(button) {
+            const itemDiv = button.parentElement;
+
+            const index = Array.from(itemDiv.parentElement.children).indexOf(itemDiv);
+            items.splice(index, 1);
+            itemDiv.remove();
+            updateUsageStatistics(); // Update stats after removal
+            updateCharts(); // Update charts after removal
+        }
+
+        function lendItem(button) {
+            alert('Item lent successfully!');
+            // You can add more functionality here, such as marking the item as lent in the data.
+        }
+
+        function donateItem(button) {
+            alert('Item donated successfully!');
+            // You can add more functionality here, such as removing the item from the list.
+            removeItem(button);
+        }
+
+        function tradeItem(button) {
+            alert('Item is ready to be traded!');
+            // You can add more functionality here, such as marking the item for trade.
+            removeItem(button);
         }
     </script>
 </body>
